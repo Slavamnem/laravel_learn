@@ -20,17 +20,28 @@ Route::get('/', ['as' => 'home', function () {
     return view('pages.page', compact('title', 'headers'))->withHeader("POSTS HERE");
 }]);
 
-//////////// Controllers ///////////////////////////////////
+////////////////// Controllers //////////////////////////////
 Route::get('/about/{id?}', 'FirstController@about');
-Route::get('/articles', 'FirstController@getArticles');
+
+Route::get('/articles/index/{id?}', 'ArticleController@index');
+Route::get('/articles/model', 'ArticleController@model');
+Route::get('/articles/connections', 'ArticleController@connections');
+Route::resource('/articles', 'ArticleController');
 //
+Route::get('/users/con', "UserController@con");
+Route::get('/users/con2', "UserController@con2");
+Route::resource('/users', 'UserController');
 //
 //Route::get('/pages/foo/{id?}', 'ResourceController@foo');
 //Route::resource('/pages', 'ResourceController');
 //
 //
-Route::get('/pages/show/{id?}', 'PagesController@show');//->middleware(['mymiddle:ggg1']);
-Route::match(['get', 'post'], '/pages/{page?}', ['uses' => 'PagesController@index', 'as' => 'pages_route']);
+
+//Route::group(['middleware' => ['web']], function() {
+    Route::get('/pages/show/{id?}', 'PagesController@show');//->middleware(['mymiddle:ggg1']);
+    Route::get('/pages/auth', 'PagesController@auth');
+    Route::match(['get', 'post'], '/pages/{page?}', ['uses' => 'PagesController@index', 'as' => 'pages_route']);
+//});
 //Route::resource('/pages', ['used' => 'PagesController']);//->name("pages_route");
 /////////////////////////////////////////////////////////////
 
@@ -45,7 +56,7 @@ Route::get('/form.html', function(){
 //});//->where(array('cat' => "[A-Za-z]+", 'id' => "[0-9]+"));
 /////////////////////////////////
 ///
-Route::group(['prefix' => 'admin', 'middleware' => ['mymiddle', 'auth']], function(){
+/*Route::group(['prefix' => 'admin', 'middleware' => ['mymiddle', 'auth']], function(){
     //echo "1";
     Route::get('page/create', function(){
         //return redirect()->route('home');
@@ -59,7 +70,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['mymiddle', 'auth']], functi
         echo $route->getName();
 
     }, 'middleware' => 'mymiddle'])->name('Editor');
-});
+});*/
 
 Route::get('/env', function(){
     //echo $id;
@@ -91,4 +102,19 @@ Route::any('/comments', function(){
     echo "<pre>";
     print_r($_POST);
     echo "</pre>";
+});
+
+
+
+Auth::routes();
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+//admin
+Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth']], function(){
+
+    Route::get('/', ['uses' => 'Admin\AdminController@show', 'as' => 'admin_index']);
+    Route::get('/add/post', ['uses' => 'Admin\AdminPostController@create', 'as' => 'admin_add_post']);
+
 });

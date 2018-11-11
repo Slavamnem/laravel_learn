@@ -10,7 +10,16 @@
             <p>NO</p>
         @endif
     </div>
-    <form action="<?php route("pages_route");?>" method="POST">
+    @if(count($errors->all())>0)
+        <div class="alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <form action="<?php echo route("pages_route");?>" method="POST">
         <input type="text" name="name">
         <input type="text" name="last_name">
         <input type="text" name="phone">

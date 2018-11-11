@@ -36,14 +36,27 @@
 </head>
 <body>
 
+
+
+@if(count($errors->all())>0)
+    <div class="alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+{{--<form action="<?php echo route("pages_route");?>" method="POST">--}}
+    {{--<input type="text" name="name" value="{{old('name')}}">--}}
+    {{--<input type="text" name="name_confirmation" value="{{old('name_confirmation')}}">--}}
+    {{--<input type="text" name="last_name" value="{{old('last_name')}}">--}}
+    {{--<input type="text" name="phone" value="{{old('phone')}}">--}}
+    {{--<input type="submit" value="SEND">--}}
+{{--</form>--}}
+
 @{{ print_r(Session::all() }}
 
-<form action="<?php route("pages_route");?>" method="GET">
-    <input type="text" name="name" value="{{old('name')}}">
-    <input type="text" name="last_name">
-    <input type="text" name="phone">
-    <input type="submit" value="SEND">
-</form>
 <div class="container-fluid">
     <div class="row content">
         <div class="col-sm-3 sidenav">

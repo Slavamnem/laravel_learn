@@ -103,6 +103,12 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'name' => [
+            'required' => 'Поле name обязательно к заполнению',
+        ],
+        'phone' => [
+            'max' => 'Телефон должен быть не более :max символов',
+        ]
     ],
 
     /*

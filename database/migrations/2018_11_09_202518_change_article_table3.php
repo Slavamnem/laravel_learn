@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeArticleTable extends Migration
+class ChangeArticleTable3 extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class ChangeArticleTable extends Migration
     {
         Schema::table('article', function (Blueprint $table) {
             //
-            $table->string("alias");
+            $table->softDeletes();
         });
     }
 
@@ -28,7 +28,7 @@ class ChangeArticleTable extends Migration
     {
         Schema::table('article', function (Blueprint $table) {
             //
-            $table->dropColumn("alias");
+            $table->dropColumn('deleted_at');
         });
     }
 }

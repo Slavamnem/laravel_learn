@@ -16,7 +16,7 @@ class ArticleController extends Controller
         echo "<h3>All articles</h3>";
 
         $articles = DB::select("SELECT * FROM article WHERE id < :id", ["id" => 5]);
-        //echo "<pre>"; print_r($articles); echo "</pre>";
+        echo "<pre>"; print_r($articles); echo "</pre>";
         //dump($articles);
 
         $article = DB::select("SELECT * FROM article WHERE id = :id", ["id" => $id]);

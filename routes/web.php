@@ -42,7 +42,7 @@ Route::resource('/users', 'UserController');
     Route::get('/pages/auth', 'PagesController@auth');
     Route::match(['get', 'post'], '/pages/{page?}', ['uses' => 'PagesController@index', 'as' => 'pages_route']);
 //});
-//Route::resource('/pages', ['used' => 'PagesController']);//->name("pages_route");
+//Route::resource('/pages', ['uses' => 'PagesController']);//->name("pages_route");
 /////////////////////////////////////////////////////////////
 
 Route::get('/form.html', function(){
@@ -112,7 +112,7 @@ Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name(
 Route::get('/home', 'HomeController@index')->name('home');
 
 //admin
-Route::group(['prefix' => 'admin', 'middleware' => ['web', 'auth']], function(){
+Route::group(['prefix' => 'admin', 'middleware' => ['web']], function(){
 
     Route::get('/', ['uses' => 'Admin\AdminController@show', 'as' => 'admin_index']);
     Route::get('/add/post', ['uses' => 'Admin\AdminPostController@create', 'as' => 'admin_add_post']);

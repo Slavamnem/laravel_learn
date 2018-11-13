@@ -105,9 +105,15 @@ Route::any('/comments', function(){
 });
 
 
+///////////////////
+//Auth::routes();
+Route::get('login', ['uses' => 'Auth\MyAuthController@showLogin', 'as' => 'login']);
+Route::post('login', ['uses' => 'Auth\MyAuthController@authenticate']);
 
-Auth::routes();
-Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+Route::get('register', ['uses' => 'Auth\MyAuthController@register', 'as' => 'register']);
+Route::post('password/reset', ['uses' => 'Auth\MyAuthController@passwordReset', 'as' => 'password.request']);
+///////////////////
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -115,6 +121,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['prefix' => 'admin', 'middleware' => ['web']], function(){
 
     Route::get('/', ['uses' => 'Admin\AdminController@show', 'as' => 'admin_index']);
-    Route::get('/add/post', ['uses' => 'Admin\AdminPostController@create', 'as' => 'admin_add_post']);
+    Route::get('/add/post', ['uses' => 'Admin\AdminPostController@add', 'as' => 'admin_add_post']);
+    Route::post('/add/post', ['uses' => 'Admin\AdminPostController@create', 'as' => 'admin_create_post']);
 
+    Route::get('/update/post/{id}', ['uses' => 'Admin\AdminPostController@change', 'as' => 'admin_change_post']);
+    Route::post('/update/post', ['uses' => 'Admin\AdminPostController@update', 'as' => 'admin_update_post']);
+
+    Route::get('/session', ['uses' => 'Admin\AdminPostController@session', 'as' => 'admin_session']);
 });
